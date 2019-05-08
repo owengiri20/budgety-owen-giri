@@ -1,0 +1,7 @@
+// TODO LIST
+- add event handler
+- get input values
+- add new item to our data structure 
+- add new item to the ui(updateUI)
+- calculate budget 
+- update ui

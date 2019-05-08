@@ -5,3 +5,20 @@
 - add new item to the ui(updateUI)
 - calculate budget 
 - update ui
+
+
+//Modules
+
+UI Module
+ - get input values
+ - add new item to the UI
+ - update ui (budget)
+
+ Data Module
+ - Add the new item to our data structure
+ - Calculate budget
+
+Controller Module
+- Add event Handler
+
+

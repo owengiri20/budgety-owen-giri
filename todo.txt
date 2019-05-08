@@ -21,4 +21,11 @@ UI Module
 Controller Module
 - Add event Handler
 
+// why use modules
+- keep pieces of code that are related to one another together,
+ inside of separete independent and  organised units
 
+ - in each of these modules we'll have variables and functions that are private which means that theyre only accesible inside the modules 
+ so that no other code can overide our data
+
+ 

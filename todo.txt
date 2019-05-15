@@ -29,3 +29,11 @@ Controller Module
  so that no other code can overide our data
 
  
+ PART 2
+
+ - Delete:  
+    - Add event handler 
+    - delete item from data structure
+    - delete item from the UI
+    - Re calculate the budget 
+    - update UI

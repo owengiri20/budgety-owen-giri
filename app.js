@@ -5,6 +5,19 @@ var budgetController = (function() {
     this.id = id;
     this.description = description;
     this.value = value;
+    this.percentage = -1;
+  };
+
+  Expense.prototype.calcPercentage = function(totalIncome) {
+    if (totalIncome > 0) {
+      this.percentage = Math.round((this.value / totalIncome) * 100);
+    } else {
+      this.percentage = -1;
+    }
+  };
+
+  Expense.prototype.getPercentage = function() {
+    return this.percentage;
   };
 
   var Income = function(id, description, value) {
@@ -87,6 +100,20 @@ var budgetController = (function() {
         data.percentage = -1;
       }
     },
+
+    calculatePercentages: function() {
+      data.allItems.exp.forEach(function(cur) {
+        cur.calcPercentage(data.totals.inc);
+      });
+    },
+
+    getPercentages: function() {
+      var allPerc = data.allItems.exp.map(function(cur) {
+        return cur.getPercentage();
+      });
+      return allPerc;
+    },
+
     getBudget: function() {
       return {
         budget: data.budget,
@@ -170,12 +197,12 @@ var UIController = (function() {
       document.querySelector(DOMStrings.expensesLabel).textContent =
         obj.totalExp;
 
-      if (obj.percentage > 0) {
+      if (obj.budget > 0) {
         document.querySelector(DOMStrings.percentageLabel).textContent = `${
           obj.percentage
         }%`;
       } else {
-        document.querySelector(DOMStrings.percentageLabel).textContent = `--`;
+        document.querySelector(DOMStrings.percentageLabel).textContent = "--";
       }
     },
 
@@ -216,6 +243,17 @@ var controller = (function(budgetCtrl, UICtrl) {
     UICtrl.displayBudget(budget); //////////////////////////////////////////////////
   };
 
+  var updatePercentages = function() {
+    // calc percenrtages
+    budgetCtrl.calculatePercentages();
+
+    // read them from budget controller
+    var percentages = budgetCtrl.getPercentages(); ///////////////////////
+
+    // updatv UI with new percentages
+    console.log(percentages);
+  };
+
   var ctrlAddItem = function() {
     var input, mewItem;
 
@@ -234,6 +272,9 @@ var controller = (function(budgetCtrl, UICtrl) {
 
       // calc and update budget
       updateBudget();
+
+      // update percentages
+      updatePercentages();
     }
   };
 
@@ -254,6 +295,9 @@ var controller = (function(budgetCtrl, UICtrl) {
 
       // update and show new budget
       updateBudget();
+
+      // update percentages
+      updatePercentages();
     }
   };
 
@@ -264,7 +308,7 @@ var controller = (function(budgetCtrl, UICtrl) {
         budget: 0,
         totalInc: 0,
         totalExp: 0,
-        percentage: 0
+        percentage: -1
       });
       setupEventListeners();
       console.log("eventLiteners have been setup");

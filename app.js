@@ -79,7 +79,7 @@ var budgetController = (function() {
       calculateTotal("exp");
       calculateTotal("inc");
       // calculate the budget = income - expenses
-      if (data.totals.inc > 0) {
+      if (data.totals.inc >= 0) {
         data.budget = data.totals.inc - data.totals.exp;
         // calculate percenrage of income that we spent
         data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
@@ -142,6 +142,12 @@ var UIController = (function() {
 
       // Insert HTML into DOM
       document.querySelector(element).insertAdjacentHTML("beforeend", newHtml);
+    },
+
+    deleteListItem: function(selectorId) {
+      // removes from UI
+      var el = document.getElementById(selectorId);
+      el.parentNode.removeChild(el); // removes chled weird sytax
     },
 
     clearFields: function() {
@@ -244,8 +250,10 @@ var controller = (function(budgetCtrl, UICtrl) {
       budgetCtrl.deleteItem(type, ID);
 
       // delete item fro UI
+      UICtrl.deleteListItem(itemID);
 
       // update and show new budget
+      updateBudget();
     }
   };
 

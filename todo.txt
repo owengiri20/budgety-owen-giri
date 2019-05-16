@@ -38,3 +38,9 @@ Controller Module
     - Re calculate the budget 
     - update UI
     
+    Part 3
+    - calc percentages + updateUI
+    - dis play current date on top of the app
+    - number formatting 
+    - improve input field UX
+    
